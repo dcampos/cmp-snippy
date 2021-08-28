@@ -38,6 +38,20 @@ function source:complete(request, callback)
 end
 
 function source:resolve(completion_item, callback)
+    local documentation = {}
+    local repr = require 'snippy'.get_repr(completion_item.data.snippet)
+    local lines = vim.split(repr, '\n', true)
+    table.insert(documentation, string.format('```%s', completion_item.data.filetype))
+    for _, line in ipairs(lines) do
+        table.insert(documentation, line)
+    end
+    table.insert(documentation, '```')
+
+    completion_item.documentation = {
+        kind = cmp.lsp.MarkupKind.Markdown,
+        value = table.concat(documentation, '\n'),
+    }
+
     callback(completion_item)
 end
 
