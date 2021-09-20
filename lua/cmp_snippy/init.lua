@@ -23,8 +23,6 @@ function source:complete(request, callback)
         local cmp_item = {
             word = item.word;
             label = item.abbr;
-            insertTextFormat = cmp.lsp.InsertTextFormat.Snippet;
-            insertText = table.concat(data.snippet.body, '\n');
             kind = cmp.lsp.CompletionItemKind.Snippet;
             data = {
                 filetype = request.context.filetype,
@@ -55,11 +53,11 @@ function source:resolve(completion_item, callback)
     callback(completion_item)
 end
 
--- function source:execute(completion_item, callback)
---     local snippet = completion_item.data.snippet
---     local trigger = completion_item.word
---     require 'snippy'.expand_snippet(snippet, trigger)
---     callback(completion_item)
--- end
+function source:execute(completion_item, callback)
+    local snippet = completion_item.data.snippet
+    local trigger = completion_item.word
+    require 'snippy'.expand_snippet(snippet, trigger)
+    callback(completion_item)
+end
 
 return source
