@@ -37,6 +37,10 @@ end
 
 function source:resolve(completion_item, callback)
     local documentation = {}
+    if completion_item.data.snippet.description and completion_item.data.snippet.description ~= "" then
+       	table.insert(documentation, completion_item.data.snippet.description)
+       	table.insert(documentation, "----------")
+    end
     local repr = require 'snippy'.get_repr(completion_item.data.snippet)
     local lines = vim.split(repr, '\n', true)
     table.insert(documentation, string.format('```%s', completion_item.data.filetype))
