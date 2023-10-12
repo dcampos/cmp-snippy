@@ -10,7 +10,7 @@
 Install using your favorite plugin manager:
 
 ```viml
-Plug 'dcampos/nvim-snippy'
+Plug 'dcampos/cmp-snippy'
 ```
 
 Enable:
